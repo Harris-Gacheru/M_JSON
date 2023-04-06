@@ -1,24 +1,22 @@
 import fs from 'fs'
 
-export let readFileFn = async(data) => {
-    fs.readFile('./data/data.json', "utf-8", async(err, data) => {
-        if(err){
-            console.log('Failed to read file. ', err)
-        }
-    
-        data = await JSON.parse(data)
-        res.send(data)
-    })
+export let stringifyContent = (data) => {
+    return JSON.stringify(data)
 }
 
-export let writeFileFn = async(data) => {
-    fs.writeFile('./data/data.json', data, (err) => {
-        if(err) {
-            console.log('Failed to write file.', err)
-            return false
-        } else{
-            console.log('Successfully written.')
-            return true
-        }
-    })
+export let parseContent = (data) => {
+    return JSON.parse(data)
+}
+
+export let readFileFn = async(path) => {
+    const data = await fs.promises.readFile(path, "utf8")
+    return data
+}
+
+export let appendFileFn = async(path, data) => {
+    return await fs.promises.appendFile(path, data)
+}
+
+export let writeFileFn = async(path, data) => {
+    return await fs.promises.writeFile(path, data)
 }
